@@ -17,7 +17,7 @@ function App() {
   const currentUser = localStorage.getItem("currentUser");
 
   return (
-    <div className="bg-cream-color w-screen h-screen">
+    <div className="bg-cream-color">
       <Router>
         <Navbar />
         <Routes>

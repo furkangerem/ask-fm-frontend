@@ -20,9 +20,11 @@ const Comment = (props) => {
       <p className="text-md leading-relaxed mt-2 mb-2">{text}</p>
       <div className="flex justify-between items-center">
         <div>
+          {/* Liking is not an option right now for comment.
           <a href="#" className="text-first-blue hover:text-third-blue mr-4">
             <i className="far fa-thumbs-up"></i> Like
           </a>
+          */}
           {/* Other Options 
           <a href="#" className="text-gray-500 hover:text-gray-700">
             <i className="far fa-comment-alt"></i> Reply

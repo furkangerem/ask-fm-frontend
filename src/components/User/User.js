@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Post from "../Post/Post";
-import Comment from "../Comment/Comment";
+import PostProfile from "../Post/PostProfile";
+import CommentProfile from "../Comment/CommentProfile";
+import { GetWithAuth } from "../../services/HttpService";
 
 const User = () => {
   const currentUser = localStorage.getItem("currentUser");
@@ -19,12 +20,7 @@ const User = () => {
   const totalCommentCounter = commentList.length;
 
   const refreshPosts = () => {
-    fetch("/v1/posts?userId=" + currentUserId, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + authToken,
-      },
-    })
+    GetWithAuth("/v1/posts?userId=" + currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -39,12 +35,7 @@ const User = () => {
   };
 
   const refreshComments = () => {
-    fetch("/v1/comments?userId=" + currentUserId, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + authToken,
-      },
-    })
+    GetWithAuth("/v1/comments?userId=" + currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -74,7 +65,7 @@ const User = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto bg-cream-color h-screen">
       <div className="px-3 py-2">
         <div className="flex flex-col gap-1 text-center">
           <a
@@ -128,17 +119,16 @@ const User = () => {
                 First post yet! How about creating one?
               </p>
             ) : (
-              <div className="grid grid-cols-3 gap-2 my-3">
+              <div className="my-3 gap-2 bg-cream-color">
                 {postList.map((post) => (
-                  <Post
+                  <PostProfile
                     key={post.id}
                     userId={post.userId}
                     userName={post.userName}
-                    postId={post.id}
                     title={post.title}
                     text={post.text}
                     likes={post.postLikes}
-                  ></Post>
+                  />
                 ))}
               </div>
             )}
@@ -152,9 +142,9 @@ const User = () => {
                 First comment yet! How about creating one?
               </p>
             ) : (
-              <div className="grid grid-cols-3 gap-2 my-3">
+              <div className="my-3 gap-2">
                 {commentList.map((comment) => (
-                  <Comment
+                  <CommentProfile
                     key={comment.id}
                     userId={currentUserId}
                     userName={currentUser}

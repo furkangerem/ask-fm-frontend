@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { PostWithAuth } from "../../services/HttpService";
 
 function PostForm(props) {
   const { userId, userName, refreshPosts } = props;
@@ -27,17 +28,10 @@ function PostForm(props) {
   };
 
   const savePost = () => {
-    fetch("/v1/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("authToken"),
-      },
-      body: JSON.stringify({
-        title: title,
-        userId: userId,
-        text: text,
-      }),
+    PostWithAuth("/v1/posts", {
+      title: title,
+      userId: userId,
+      text: text,
     })
       .then((res) => res.json())
       .then(() => {

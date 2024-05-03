@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { PostWithoutAuth } from "../../services/HttpService";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -55,18 +56,12 @@ const Register = () => {
   };
 
   const sendRequest = (path) => {
-    fetch(path, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userName: username,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        role: "USER",
-      }),
+    PostWithoutAuth(path, {
+      userName: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      role: "USER",
     })
       .then((res) => res.json())
       .then(() => {

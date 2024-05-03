@@ -3,6 +3,11 @@ import { FcLike, FcDislike } from "react-icons/fc";
 import { FaRegComment } from "react-icons/fa";
 import CommentForm from "../Comment/CommentForm";
 import Comment from "../Comment/Comment";
+import {
+  PostWithAuth,
+  GetWithoutAuth,
+  DeleteWithAuth,
+} from "../../services/HttpService";
 
 function Post(props) {
   const { postId, title, text, userId, userName, likes } = props;
@@ -39,7 +44,7 @@ function Post(props) {
   };
 
   const refreshComments = (postId) => {
-    fetch("/v1/comments?postId=" + postId)
+    GetWithoutAuth("/v1/comments?postId=" + postId)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -54,16 +59,9 @@ function Post(props) {
   };
 
   const saveLike = () => {
-    fetch("/v1/likes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + authToken,
-      },
-      body: JSON.stringify({
-        postId: postId,
-        userId: currentUserId,
-      }),
+    PostWithAuth("/v1/likes", {
+      postId: postId,
+      userId: currentUserId,
     })
       .then((res) => res.json())
       .then((data) => {
@@ -73,12 +71,7 @@ function Post(props) {
   };
 
   const deleteLike = (likeId) => {
-    fetch("/v1/likes/" + likeId, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + authToken,
-      },
-    }).catch((err) => console.log("error"));
+    DeleteWithAuth("/v1/likes/" + likeId).catch((err) => console.log("error"));
   };
 
   const checkLike = () => {
@@ -118,8 +111,10 @@ function Post(props) {
             </span>
           </a>
 
-          <div className="font-bold font-lato text-xl mb-2 mt-2">{title}</div>
-          <p className="text-black font-lato text-base">{text}</p>
+          <div className="font-bold font-lato text-xl mb-2 mt-2 text-black">
+            {title}
+          </div>
+          <p className="text-black font-lato text-base font-normal">{text}</p>
           <hr className="my-4 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-black to-transparent opacity-25" />
           {/* Clickable Buttons */}
           {/* Like/Dislike Button */}
@@ -138,7 +133,7 @@ function Post(props) {
             <span className="text-black font-bold font-lato">{likeCount}</span>
             {/* Comments Button */}
             <button onClick={() => toggleComments(postId)} className="ml-2">
-              <FaRegComment className="ml-2" />
+              <FaRegComment className="ml-2 text-black" />
             </button>
           </div>
 
@@ -152,8 +147,8 @@ function Post(props) {
                   ? commentList.map((comment) => (
                       <Comment
                         key={comment.id}
-                        userId={currentUserId}
-                        userName={currentUser}
+                        userId={comment.userId}
+                        userName={comment.userName}
                         text={comment.text}
                       />
                     ))
@@ -163,7 +158,7 @@ function Post(props) {
           )}
           {showComments && (
             <CommentForm
-              userId={userId}
+              userId={currentUserId}
               postId={postId}
               refreshComments={refreshComments}
             />

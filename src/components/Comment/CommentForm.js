@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { PostWithAuth } from "../../services/HttpService";
 
 const CommentForm = (props) => {
   const { postId, userId, refreshComments } = props;
@@ -29,17 +30,10 @@ const CommentForm = (props) => {
   };
 
   const saveComment = () => {
-    fetch("/v1/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("authToken"),
-      },
-      body: JSON.stringify({
-        postId: postId,
-        userId: userId,
-        text: commentText,
-      }),
+    PostWithAuth("/v1/comments", {
+      postId: postId,
+      userId: userId,
+      text: commentText,
     })
       .then((res) => res.json())
       .then(() => {

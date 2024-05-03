@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Post from "../Post/Post";
 import PostForm from "../Post/PostForm";
+import { GetWithoutAuth } from "../../services/HttpService";
 
 const Home = () => {
   const [error, setError] = useState(null);
@@ -8,7 +9,7 @@ const Home = () => {
   const [postList, setPostList] = useState([]);
 
   const refreshPosts = () => {
-    fetch("/v1/posts")
+    GetWithoutAuth("/v1/posts")
       .then((res) => res.json())
       .then(
         (result) => {

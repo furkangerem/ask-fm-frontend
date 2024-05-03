@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../../images/pngegg.png";
+import Notification from "../Notification/Notification";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -31,6 +32,11 @@ const Navbar = () => {
             <a href={"/v1/users/" + localStorage.getItem("currentUserId")}>
               <li className="p-4 font-bold font-lato">Profile</li>
             </a>
+          )}
+          {currentUser && (
+            <li className="p-4 font-bold font-lato flex items-center">
+              <Notification />
+            </li>
           )}
           {currentUser ? (
             <a href="/logout">
