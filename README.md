@@ -19,7 +19,7 @@ A forum application where users can sign up and ask questions, write answers to 
   
 ## ScreenShots
 
-![Welcome Page](![welcomeScreen](https://github.com/furkangerem/ask-fm-backend/assets/83163617/df65ecaf-9134-4411-8d44-2d2eda38f40a))
+![Welcome Page](https://github.com/furkangerem/ask-fm-frontend/assets/83163617/48a02846-8830-4604-8f5a-d87f779da0bf)
 ![Register](https://github.com/furkangerem/ask-fm-backend/assets/83163617/046f01b1-827a-4aad-bf29-e6501361d7c8)
 ![Login](https://github.com/furkangerem/ask-fm-backend/assets/83163617/1e851f9a-e108-4643-b822-f79ff784eef0)
 ![Home](https://github.com/furkangerem/ask-fm-backend/assets/83163617/283059de-79bb-4f16-ab58-4168d927f195)
